@@ -174,7 +174,52 @@ class SQLiteManager {
                     sqlite3_finalize(stmt)
                     return resultado
             }
-    // MARK: - Eliminar Quiz
+    /**
+             * Entradas: idQuiz
+             * Salidas: Arreglo de tuplas con detalles de la pregunta
+             * Valor de retorno: Arreglo de preguntas
+             * Función: Obtiene todos los campos de la pregunta incluyendo las 4 opciones
+             * Variables: preguntas, query, stmt
+             * Fecha: 23-04-2026
+             * Autor: Miguel Alexander Córdova Torres
+             */
+            func obtenerPreguntasDetalladas(idQuiz: Int) -> [(id: Int64, tipo: String, texto: String, opA: String, opB: String, opC: String?, opD: String?, respuesta: String)] {
+                    
+                    var preguntas_completas: [(id: Int64, tipo: String, texto: String, opA: String, opB: String, opC: String?, opD: String?, respuesta: String)] = []
+                    
+                    // Asegúrate de que los nombres de las columnas coincidan con cómo Alejandra creó la tabla
+                let query = "SELECT id_pregunta, tipo_pregunta, texto_pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta FROM pregunta WHERE id_quiz = ?;"
+                var stmt: OpaquePointer?
+                    
+                    if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK {
+                            sqlite3_bind_int64(stmt, 1, Int64(idQuiz))
+                            
+                            while sqlite3_step(stmt) == SQLITE_ROW {
+                                    let id = sqlite3_column_int64(stmt, 0)
+                                    let tipo = String(cString: sqlite3_column_text(stmt, 1))
+                                    let texto = String(cString: sqlite3_column_text(stmt, 2))
+                                    let opA = String(cString: sqlite3_column_text(stmt, 3))
+                                    let opB = String(cString: sqlite3_column_text(stmt, 4))
+                                    
+                                    // C y D son opcionales porque V/F no los tiene
+                                    var opC: String? = nil
+                                    if let cStringC = sqlite3_column_text(stmt, 5) {
+                                            opC = String(cString: cStringC)
+                                    }
+                                    
+                                    var opD: String? = nil
+                                    if let cStringD = sqlite3_column_text(stmt, 6) {
+                                            opD = String(cString: cStringD)
+                                    }
+                                    
+                                    let respuesta = String(cString: sqlite3_column_text(stmt, 7))
+                                    
+                                    preguntas_completas.append((id: id, tipo: tipo, texto: texto, opA: opA, opB: opB, opC: opC, opD: opD, respuesta: respuesta))
+                            }
+                    }
+                    sqlite3_finalize(stmt)
+                    return preguntas_completas
+            }    // MARK: - Eliminar Quiz
             
             func eliminarQuiz(idQuiz: Int) -> Bool {
                     guard db != nil else { return false }

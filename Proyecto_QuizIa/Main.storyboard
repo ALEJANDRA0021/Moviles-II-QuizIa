@@ -62,45 +62,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZw-vE-qPq">
-                                <rect key="frame" x="16" y="59" width="361" height="170"/>
+                                <rect key="frame" x="16" y="59" width="361" height="134"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sgi-kg-qYm">
-                                <rect key="frame" x="40" y="339" width="126" height="104"/>
+                                <rect key="frame" x="40" y="265" width="126" height="104"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="VERDADERO">
+                                <buttonConfiguration key="configuration" style="plain" title="BTNA/V">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="btnVerdaderoPresionado:" destination="6Iy-r7-1gC" eventType="touchUpInside" id="sOJ-y2-OXJ"/>
+                                    <action selector="accionRespuestaPresionada:" destination="6Iy-r7-1gC" eventType="touchUpInside" id="y7n-cI-bh4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gN-eq-Vhg">
-                                <rect key="frame" x="233" y="339" width="126" height="104"/>
+                                <rect key="frame" x="225" y="265" width="126" height="104"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="FALSO">
+                                <buttonConfiguration key="configuration" style="plain" title="BTNB/F">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="btnFalsoPresionado:" destination="6Iy-r7-1gC" eventType="touchUpInside" id="k0F-Jg-j3J"/>
+                                    <action selector="accionRespuestaPresionada:" destination="6Iy-r7-1gC" eventType="touchUpInside" id="Ew4-AT-5o7"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4kb-3j-Cs7">
-                                <rect key="frame" x="40" y="600" width="319" height="115"/>
+                                <rect key="frame" x="40" y="634" width="319" height="115"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E9Z-zL-siA">
-                                <rect key="frame" x="242" y="481" width="109" height="59"/>
+                                <rect key="frame" x="242" y="551" width="109" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="SIGUIENTE">
@@ -111,7 +111,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e96-ry-LpQ">
-                                <rect key="frame" x="50" y="481" width="106" height="59"/>
+                                <rect key="frame" x="50" y="551" width="106" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="ANTERIOR">
@@ -121,6 +121,30 @@
                                     <action selector="btnAnteriorPresionado:" destination="6Iy-r7-1gC" eventType="touchUpInside" id="rLn-BR-MYs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="At1-FF-GI7">
+                                <rect key="frame" x="40" y="408" width="126" height="107"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="OPCION C">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="accionRespuestaPresionada:" destination="6Iy-r7-1gC" eventType="touchUpInside" id="Buw-wb-lXF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzr-SI-wry">
+                                <rect key="frame" x="225" y="408" width="126" height="106"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="OPCION D">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="accionRespuestaPresionada:" destination="6Iy-r7-1gC" eventType="touchUpInside" id="7Wg-ao-dt9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="v2N-se-XCN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -128,6 +152,10 @@
                     <navigationItem key="navigationItem" id="f2V-5b-wvb"/>
                     <connections>
                         <outlet property="btn_anterior" destination="e96-ry-LpQ" id="cxZ-sF-eHM"/>
+                        <outlet property="btn_opcion_a" destination="Sgi-kg-qYm" id="XlA-mq-VX9"/>
+                        <outlet property="btn_opcion_b" destination="0gN-eq-Vhg" id="jsW-1D-pGJ"/>
+                        <outlet property="btn_opcion_c" destination="At1-FF-GI7" id="8ai-SN-BEF"/>
+                        <outlet property="btn_opcion_d" destination="qzr-SI-wry" id="lKf-MR-maS"/>
                         <outlet property="btn_siguiente" destination="E9Z-zL-siA" id="bI2-zo-rp8"/>
                         <outlet property="label_feedback" destination="4kb-3j-Cs7" id="na5-6w-JMA"/>
                         <outlet property="label_pregunta" destination="ZZw-vE-qPq" id="e3F-2n-yuV"/>
@@ -175,6 +203,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="itL-p4-R3B" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bej-VR-8BG">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -193,6 +222,9 @@
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -201,6 +233,9 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

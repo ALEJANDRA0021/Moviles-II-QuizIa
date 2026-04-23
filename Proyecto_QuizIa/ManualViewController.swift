@@ -9,155 +9,229 @@ import UIKit
 
 class ManualViewController: UIViewController {
 
-        private let txt_nombre = UITextField()
-        private let txt_pregunta = UITextField()
-        private let sw_respuesta = UISwitch()
-        private let btn_guardar = UIButton(type: .system)
-        private let btn_terminar = UIButton(type: .system) // Nuevo botón
+        private let nombreTextField = UITextField()
+        private let preguntaTextField = UITextField()
+        
+        // Selector de tipo de pregunta
+        private let tipoPreguntaSegmented = UISegmentedControl(items: ["Verdadero/Falso", "Opción Múltiple"])
+        
+        // Elementos para V/F
+        private let switchLabel = UILabel()
+        private let respuestaCorrectaSwitch = UISwitch()
+        
+        // Elementos para Opción Múltiple
+        private let txtOpcionA = UITextField()
+        private let txtOpcionB = UITextField()
+        private let txtOpcionC = UITextField()
+        private let txtOpcionD = UITextField()
+        private let selectorRespuestaCorrecta = UISegmentedControl(items: ["A", "B", "C", "D"])
+        
+        private let guardarButton = UIButton(type: .system)
+        private let terminarButton = UIButton(type: .system)
 
-        // Variable para saber a qué quiz le estamos metiendo preguntas
         var id_quiz_activo: Int64 = 0
 
         override func viewDidLoad() {
                 super.viewDidLoad()
                 view.backgroundColor = .systemBackground
                 title = "Crear Quiz"
-                configurarInterfaz()
+                setupUI()
+                
+                // Configuración inicial del selector
+                tipoPreguntaSegmented.selectedSegmentIndex = 0
+                tipoPreguntaSegmented.addTarget(self, action: #selector(cambioTipoPregunta), for: .valueChanged)
+                cambioTipoPregunta() // Forzar la vista inicial
         }
 
         /**
          * Entradas: Ninguna
-         * Salidas: Componentes visuales en pantalla
+         * Salidas: Elementos mostrados en pantalla
          * Valor de retorno: Ninguno
-         * Función: Dibuja los campos de texto y botones programáticamente
-         * Variables: txt_nombre, txt_pregunta, sw_respuesta, btn_guardar, btn_terminar
-         * Fecha: 22-04-2026
+         * Función: Configura y posiciona todos los elementos visuales
+         * Variables: Elementos de UI
+         * Fecha: 23-04-2026
          * Autor: Miguel Alexander Córdova Torres
          * Rutinas anexas: Ninguna
          */
-        private func configurarInterfaz() {
-                // Configuración de elementos (código original de Alejandra adaptado)
-                txt_nombre.placeholder = "Nombre del Quiz (ej. Historia)"
-                txt_nombre.borderStyle = .roundedRect
-                txt_nombre.translatesAutoresizingMaskIntoConstraints = false
-                view.addSubview(txt_nombre)
+        private func setupUI() {
+                let elementos = [nombreTextField, preguntaTextField, tipoPreguntaSegmented, switchLabel, respuestaCorrectaSwitch, txtOpcionA, txtOpcionB, txtOpcionC, txtOpcionD, selectorRespuestaCorrecta, guardarButton, terminarButton]
+                
+                for elemento in elementos {
+                        elemento.translatesAutoresizingMaskIntoConstraints = false
+                        if let textField = elemento as? UITextField {
+                                textField.borderStyle = .roundedRect
+                        }
+                        view.addSubview(elemento)
+                }
 
-                txt_pregunta.placeholder = "Escribe la pregunta"
-                txt_pregunta.borderStyle = .roundedRect
-                txt_pregunta.translatesAutoresizingMaskIntoConstraints = false
-                view.addSubview(txt_pregunta)
+                nombreTextField.placeholder = "Nombre del Quiz (ej. Historia)"
+                preguntaTextField.placeholder = "Escribe la pregunta"
+                switchLabel.text = "¿La respuesta correcta es Verdadero?"
+                
+                txtOpcionA.placeholder = "Opción A (Ej. París)"
+                txtOpcionB.placeholder = "Opción B (Ej. Londres)"
+                txtOpcionC.placeholder = "Opción C (Ej. Madrid)"
+                txtOpcionD.placeholder = "Opción D (Ej. Roma)"
+                selectorRespuestaCorrecta.selectedSegmentIndex = 0
 
-                let lbl_switch = UILabel()
-                lbl_switch.text = "¿La respuesta correcta es Verdadero?"
-                lbl_switch.translatesAutoresizingMaskIntoConstraints = false
-                view.addSubview(lbl_switch)
+                guardarButton.setTitle("Crear Quiz y Guardar Pregunta 1", for: .normal)
+                guardarButton.addTarget(self, action: #selector(guardarLogica), for: .touchUpInside)
 
-                sw_respuesta.translatesAutoresizingMaskIntoConstraints = false
-                view.addSubview(sw_respuesta)
+                terminarButton.setTitle("Terminar Quiz", for: .normal)
+                terminarButton.setTitleColor(.systemRed, for: .normal)
+                terminarButton.addTarget(self, action: #selector(terminarQuiz), for: .touchUpInside)
+                terminarButton.isHidden = true
 
-                btn_guardar.setTitle("Comenzar Nuevo Quiz", for: .normal)
-                btn_guardar.translatesAutoresizingMaskIntoConstraints = false
-                btn_guardar.addTarget(self, action: #selector(accionGuardar), for: .touchUpInside)
-                view.addSubview(btn_guardar)
-
-                btn_terminar.setTitle("Terminar y Salir", for: .normal)
-                btn_terminar.setTitleColor(.systemRed, for: .normal)
-                btn_terminar.translatesAutoresizingMaskIntoConstraints = false
-                btn_terminar.addTarget(self, action: #selector(accionTerminar), for: .touchUpInside)
-                btn_terminar.isHidden = true // Se oculta hasta que haya un quiz activo
-                view.addSubview(btn_terminar)
-
-                // Posiciones (Constraints)
+                // Constraints (Posiciones)
                 NSLayoutConstraint.activate([
-                        txt_nombre.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-                        txt_nombre.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                        txt_nombre.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                        nombreTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+                        nombreTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        nombreTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-                        txt_pregunta.topAnchor.constraint(equalTo: txt_nombre.bottomAnchor, constant: 20),
-                        txt_pregunta.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                        txt_pregunta.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                        preguntaTextField.topAnchor.constraint(equalTo: nombreTextField.bottomAnchor, constant: 15),
+                        preguntaTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        preguntaTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-                        lbl_switch.topAnchor.constraint(equalTo: txt_pregunta.bottomAnchor, constant: 20),
-                        lbl_switch.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        tipoPreguntaSegmented.topAnchor.constraint(equalTo: preguntaTextField.bottomAnchor, constant: 15),
+                        tipoPreguntaSegmented.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        tipoPreguntaSegmented.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-                        sw_respuesta.centerYAnchor.constraint(equalTo: lbl_switch.centerYAnchor),
-                        sw_respuesta.leadingAnchor.constraint(equalTo: lbl_switch.trailingAnchor, constant: 10),
+                        // Constraints V/F
+                        switchLabel.topAnchor.constraint(equalTo: tipoPreguntaSegmented.bottomAnchor, constant: 20),
+                        switchLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        respuestaCorrectaSwitch.centerYAnchor.constraint(equalTo: switchLabel.centerYAnchor),
+                        respuestaCorrectaSwitch.leadingAnchor.constraint(equalTo: switchLabel.trailingAnchor, constant: 10),
 
-                        btn_guardar.topAnchor.constraint(equalTo: lbl_switch.bottomAnchor, constant: 40),
-                        btn_guardar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                        // Constraints Múltiple
+                        txtOpcionA.topAnchor.constraint(equalTo: tipoPreguntaSegmented.bottomAnchor, constant: 15),
+                        txtOpcionA.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        txtOpcionA.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                        
+                        txtOpcionB.topAnchor.constraint(equalTo: txtOpcionA.bottomAnchor, constant: 10),
+                        txtOpcionB.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        txtOpcionB.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                        
+                        txtOpcionC.topAnchor.constraint(equalTo: txtOpcionB.bottomAnchor, constant: 10),
+                        txtOpcionC.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        txtOpcionC.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                        
+                        txtOpcionD.topAnchor.constraint(equalTo: txtOpcionC.bottomAnchor, constant: 10),
+                        txtOpcionD.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        txtOpcionD.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                        
+                        selectorRespuestaCorrecta.topAnchor.constraint(equalTo: txtOpcionD.bottomAnchor, constant: 15),
+                        selectorRespuestaCorrecta.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                        selectorRespuestaCorrecta.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-                        btn_terminar.topAnchor.constraint(equalTo: btn_guardar.bottomAnchor, constant: 20),
-                        btn_terminar.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+                        guardarButton.bottomAnchor.constraint(equalTo: terminarButton.topAnchor, constant: -15),
+                        guardarButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+                        terminarButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+                        terminarButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
                 ])
         }
 
         /**
          * Entradas: Ninguna
-         * Salidas: Datos guardados en SQLite
+         * Salidas: Modificación visual de componentes
          * Valor de retorno: Ninguno
-         * Función: Crea el quiz si no existe, y le anexa la pregunta escrita
-         * Variables: id_quiz_activo, nombre, texto_pregunta
-         * Fecha: 22-04-2026
+         * Función: Oculta o muestra campos dependiendo del tipo de pregunta elegido
+         * Variables: tipoPreguntaSegmented
+         * Fecha: 23-04-2026
          * Autor: Miguel Alexander Córdova Torres
-         * Rutinas anexas: insertarQuiz, insertarPregunta
          */
-        @objc private func accionGuardar() {
-                guard let nombre = txt_nombre.text, !nombre.isEmpty,
-                      let texto_pregunta = txt_pregunta.text, !texto_pregunta.isEmpty else {
-                        mostrarAlerta(titulo: "Error", mensaje: "Completa todos los campos")
-                        return
-                }
-
-                // Si es un quiz nuevo, primero lo creamos
-                if id_quiz_activo == 0 {
-                        if let nuevo_id = SQLiteManager.shared.insertarQuiz(nombre: nombre, categoria: "General") {
-                                id_quiz_activo = nuevo_id
-                                
-                                // Cambiamos la interfaz visualmente
-                                txt_nombre.isEnabled = false // Bloqueamos el nombre
-                                txt_nombre.backgroundColor = .systemGray6
-                                btn_guardar.setTitle("Guardar Pregunta", for: .normal)
-                                btn_terminar.isHidden = false // Mostramos botón de salir
-                        }
-                }
-
-                // Guardamos la pregunta anexada a ese ID
-                if id_quiz_activo != 0 {
-                        let respuesta = sw_respuesta.isOn ? "Verdadero" : "Falso"
-                        let exito = SQLiteManager.shared.insertarPregunta(
-                                idQuiz: id_quiz_activo, tipo: "verdadero_falso", texto: texto_pregunta,
-                                opA: "Verdadero", opB: "Falso", opC: nil, opD: nil, respuesta: respuesta
-                        )
-
-                        if exito == true {
-                                mostrarAlerta(titulo: "Éxito", mensaje: "Pregunta anexada al quiz")
-                                txt_pregunta.text = "" // Limpiamos solo la pregunta
-                                sw_respuesta.isOn = false
-                        }
-                }
+        @objc private func cambioTipoPregunta() {
+                let esMultiple = tipoPreguntaSegmented.selectedSegmentIndex == 1
+                
+                // Ocultar/Mostrar V/F
+                switchLabel.isHidden = esMultiple
+                respuestaCorrectaSwitch.isHidden = esMultiple
+                
+                // Ocultar/Mostrar Múltiple
+                txtOpcionA.isHidden = !esMultiple
+                txtOpcionB.isHidden = !esMultiple
+                txtOpcionC.isHidden = !esMultiple
+                txtOpcionD.isHidden = !esMultiple
+                selectorRespuestaCorrecta.isHidden = !esMultiple
         }
 
         /**
          * Entradas: Ninguna
-         * Salidas: Interfaz reiniciada
+         * Salidas: Inserción en base de datos
          * Valor de retorno: Ninguno
-         * Función: Reinicia las variables y limpia los campos para un nuevo quiz
-         * Variables: id_quiz_activo, txt_nombre, txt_pregunta
-         * Fecha: 22-04-2026
+         * Función: Evalúa el tipo de pregunta y la guarda en SQLite
+         * Variables: id_quiz_activo
+         * Fecha: 23-04-2026
          * Autor: Miguel Alexander Córdova Torres
-         * Rutinas anexas: Ninguna
          */
-        @objc private func accionTerminar() {
+        @objc private func guardarLogica() {
+                guard let nombre = nombreTextField.text, !nombre.isEmpty,
+                      let textoPregunta = preguntaTextField.text, !textoPregunta.isEmpty else {
+                        mostrarAlerta(titulo: "Error", mensaje: "Completa la pregunta y el nombre")
+                        return
+                }
+
+                if id_quiz_activo == 0 {
+                        if let nuevoId = SQLiteManager.shared.insertarQuiz(nombre: nombre, categoria: "General") {
+                                id_quiz_activo = nuevoId
+                                nombreTextField.isEnabled = false
+                                nombreTextField.backgroundColor = .systemGray6
+                                guardarButton.setTitle("Agregar Siguiente Pregunta", for: .normal)
+                                terminarButton.isHidden = false
+                        }
+                }
+
+                if id_quiz_activo != 0 {
+                        let esMultiple = tipoPreguntaSegmented.selectedSegmentIndex == 1
+                        let tipoStr = esMultiple ? "multiple" : "verdadero_falso"
+                        var respFinal = ""
+                        var opA = "Verdadero", opB = "Falso", opC: String? = nil, opD: String? = nil
+
+                        if esMultiple {
+                                guard let a = txtOpcionA.text, !a.isEmpty,
+                                      let b = txtOpcionB.text, !b.isEmpty,
+                                      let c = txtOpcionC.text, !c.isEmpty,
+                                      let d = txtOpcionD.text, !d.isEmpty else {
+                                        mostrarAlerta(titulo: "Error", mensaje: "Llena las 4 opciones")
+                                        return
+                                }
+                                opA = a; opB = b; opC = c; opD = d
+                                let opciones = [a, b, c, d]
+                                respFinal = opciones[selectorRespuestaCorrecta.selectedSegmentIndex]
+                        } else {
+                                respFinal = respuestaCorrectaSwitch.isOn ? "Verdadero" : "Falso"
+                        }
+
+                        let exito = SQLiteManager.shared.insertarPregunta(
+                                idQuiz: id_quiz_activo, tipo: tipoStr, texto: textoPregunta,
+                                opA: opA, opB: opB, opC: opC, opD: opD, respuesta: respFinal
+                        )
+
+                        if exito == true {
+                                mostrarAlerta(titulo: "Éxito", mensaje: "Pregunta guardada")
+                                limpiarCamposPregunta()
+                        }
+                }
+        }
+
+        private func limpiarCamposPregunta() {
+                preguntaTextField.text = ""
+                respuestaCorrectaSwitch.isOn = false
+                txtOpcionA.text = ""
+                txtOpcionB.text = ""
+                txtOpcionC.text = ""
+                txtOpcionD.text = ""
+                selectorRespuestaCorrecta.selectedSegmentIndex = 0
+        }
+
+        @objc private func terminarQuiz() {
                 id_quiz_activo = 0
-                txt_nombre.isEnabled = true
-                txt_nombre.backgroundColor = .clear
-                txt_nombre.text = ""
-                txt_pregunta.text = ""
-                btn_guardar.setTitle("Comenzar Nuevo Quiz", for: .normal)
-                btn_terminar.isHidden = true
-                
-                // Opcional: Regresamos al usuario a la primera pestaña
-                self.tabBarController?.selectedIndex = 0
+                nombreTextField.isEnabled = true
+                nombreTextField.backgroundColor = .clear
+                nombreTextField.text = ""
+                limpiarCamposPregunta()
+                guardarButton.setTitle("Crear Quiz y Guardar Pregunta 1", for: .normal)
+                terminarButton.isHidden = true
         }
 
         private func mostrarAlerta(titulo: String, mensaje: String) {
