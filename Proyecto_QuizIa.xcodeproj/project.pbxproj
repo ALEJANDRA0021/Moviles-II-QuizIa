@@ -11,6 +11,7 @@
 		49682CDD2F9949BB005E208E /* MisQuizzesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49682CDC2F9949BB005E208E /* MisQuizzesViewController.swift */; };
 		49682CDF2F994A28005E208E /* IAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49682CDE2F994A28005E208E /* IAViewController.swift */; };
 		49682CE12F994A42005E208E /* ManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49682CE02F994A42005E208E /* ManualViewController.swift */; };
+		49682CE32F99871B005E208E /* ModoEstudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49682CE22F99871B005E208E /* ModoEstudioViewController.swift */; };
 		5267420D2F70AC5D00169896 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267420C2F70AC5D00169896 /* AppDelegate.swift */; };
 		5267420F2F70AC5D00169896 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267420E2F70AC5D00169896 /* SceneDelegate.swift */; };
 		526742112F70AC5D00169896 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526742102F70AC5D00169896 /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 		49682CDC2F9949BB005E208E /* MisQuizzesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MisQuizzesViewController.swift; sourceTree = "<group>"; };
 		49682CDE2F994A28005E208E /* IAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAViewController.swift; sourceTree = "<group>"; };
 		49682CE02F994A42005E208E /* ManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualViewController.swift; sourceTree = "<group>"; };
+		49682CE22F99871B005E208E /* ModoEstudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModoEstudioViewController.swift; sourceTree = "<group>"; };
 		526742092F70AC5D00169896 /* Proyecto_QuizIa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proyecto_QuizIa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5267420C2F70AC5D00169896 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5267420E2F70AC5D00169896 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				526742152F70AC5E00169896 /* Assets.xcassets */,
 				526742172F70AC5E00169896 /* LaunchScreen.storyboard */,
 				49682CDA2F9931E7005E208E /* Main.storyboard */,
+				49682CE22F99871B005E208E /* ModoEstudioViewController.swift */,
 				49682CDC2F9949BB005E208E /* MisQuizzesViewController.swift */,
 				49682CDE2F994A28005E208E /* IAViewController.swift */,
 				5267421A2F70AC5E00169896 /* Info.plist */,
@@ -186,6 +189,7 @@
 				5267420D2F70AC5D00169896 /* AppDelegate.swift in Sources */,
 				52EDD4062F95E6A300A20993 /* SQLiteManager.swift in Sources */,
 				49682CDF2F994A28005E208E /* IAViewController.swift in Sources */,
+				49682CE32F99871B005E208E /* ModoEstudioViewController.swift in Sources */,
 				5267420F2F70AC5D00169896 /* SceneDelegate.swift in Sources */,
 				52EDD37C2F95E09400A20993 /* Models.swift in Sources */,
 			);

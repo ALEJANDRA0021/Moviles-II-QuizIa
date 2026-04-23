@@ -152,7 +152,49 @@ class SQLiteManager {
         sqlite3_finalize(stmt)
         return resultado
     }
-
+    // MARK: - Obtener Preguntas por Quiz
+            
+            func obtenerPreguntas(idQuiz: Int) -> [(id: Int64, texto: String, respuesta: String)] {
+                    guard db != nil else { return [] }
+                    var resultado: [(Int64, String, String)] = []
+                    
+                    let query = "SELECT id_pregunta, texto_pregunta, respuesta_correcta FROM pregunta WHERE id_quiz = ?;"
+                    var stmt: OpaquePointer?
+                    
+                    if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK {
+                            sqlite3_bind_int64(stmt, 1, Int64(idQuiz))
+                            
+                            while sqlite3_step(stmt) == SQLITE_ROW {
+                                    let id = sqlite3_column_int64(stmt, 0)
+                                    let texto = String(cString: sqlite3_column_text(stmt, 1))
+                                    let respuesta = String(cString: sqlite3_column_text(stmt, 2))
+                                    resultado.append((id, texto, respuesta))
+                            }
+                    }
+                    sqlite3_finalize(stmt)
+                    return resultado
+            }
+    // MARK: - Eliminar Quiz
+            
+            func eliminarQuiz(idQuiz: Int) -> Bool {
+                    guard db != nil else { return false }
+                    
+                    let deleteSQL = "DELETE FROM quiz WHERE id_quiz = ?;"
+                    var stmt: OpaquePointer?
+                    
+                    if sqlite3_prepare_v2(db, deleteSQL, -1, &stmt, nil) == SQLITE_OK {
+                            sqlite3_bind_int64(stmt, 1, Int64(idQuiz))
+                            
+                            if sqlite3_step(stmt) == SQLITE_DONE {
+                                    sqlite3_finalize(stmt)
+                                    return true
+                            }
+                    }
+                    sqlite3_finalize(stmt)
+                    return false
+            }
+    
+    
     // Cerrar la BD cuando se destruye la instancia (buena práctica)
     deinit {
         if db != nil {
